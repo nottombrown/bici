@@ -1,12 +1,8 @@
+This is a basic Django setup for Ubuntu and Apache 2.
 We are using python 2.5 and django 1.1
-database should be chmoded
+database and the containing directory should be writable.
 
 your httpd.conf should have this to work properly:
-<Location "/media/">                                                                  
-                                                                                        
-    SetHandler None                                                                   
-                                                                                        
-</Location>
 
 <Location "/">                                                                        
                                                                                         
@@ -20,6 +16,10 @@ your httpd.conf should have this to work properly:
                                                                                         
     PythonPath "['/home/tombrown','/home/tombrown/bici'] + sys.path" 
                                                                                                     
-</Location>                                                                           
+</Location> 
+
+<Location "/media/">                                                                  
                                                                                         
-                                                                
+    SetHandler None                                                                   
+                                                                                        
+</Location>
