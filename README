@@ -5,24 +5,24 @@ $sudo apt-get install apache2 libapache2-mod-python python-django
 The database and the containing directory should be writable.
 $python autochmod.py
 
-your httpd.conf should have this to work properly:
+your vhosts.conf should have this to work properly:
 
-<Location "/">                                                                        
-                                                                                        
-    SetHandler python-program                                                         
-                                                                                        
-    PythonHandler django.core.handlers.modpython                                      
-                                                                                        
-    SetEnv DJANGO_SETTINGS_MODULE bicimap.settings                                    
-                                                                                        
-    PythonDebug On                                                                    
-                                                                                        
-    PythonPath "['/home/tombrown','/home/tombrown/bici'] + sys.path" 
-                                                                                                    
-</Location> 
+<VirtualHost 204.232.204.112>
+             ServerName example.com
+             ServerAlias www.example.com
 
-<Location "/media/">                                                                  
-                                                                                        
-    SetHandler None                                                                   
-                                                                                        
-</Location>
+             <Location "/">
+                 SetHandler python-program
+                 PythonHandler django.core.handlers.modpython
+                 SetEnv DJANGO_SETTINGS_MODULE bicimap.settings
+                 PythonDebug On
+                 PythonPath "['/home/tombrown/'] + ['/home/tombrown/bici/'] + sys.path"
+              </Location>
+
+              Alias /media/ /home/tombrown/bici/media/
+              <Location "/media/">
+                  SetHandler None
+              </Location>
+
+
+</VirtualHost>
