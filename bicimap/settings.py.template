@@ -3,7 +3,7 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DOMAIN = 'http://mobility-server.media.mit.edu'
+DOMAIN = 'http://ingdirectcoupons.com'
 ROOT_DIR = '/home/tombrown/bici/'
 
 ADMINS = (
