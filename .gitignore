@@ -1,4 +1,6 @@
+bicimap/settings.py
 *.pyc
 *~
 db/db
-bicimap/settings.py
+.DS_Store
+*.tmproj
