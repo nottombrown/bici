@@ -1,6 +1,9 @@
 This is a basic Django setup for Ubuntu and Apache 2.
-We are using python 2.5 and django 1.1
-database and the containing directory should be writable.
+We are using python 2.5 and django 1.1.
+$sudo apt-get install apache2 libapache2-mod-python python-django
+
+The database and the containing directory should be writable.
+$python autochmod.py
 
 your vhosts.conf should have this to work properly:
 
