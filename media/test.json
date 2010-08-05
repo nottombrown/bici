@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "kiosks.kiosk", "fields": {"bikes": 20, "last_updated": "2010-08-05 19:52:54", "name": "centerplusabit", "spaces": 2, "lat": 37.390891000000003, "lng": -5.987533}}]

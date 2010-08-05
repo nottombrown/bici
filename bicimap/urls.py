@@ -18,5 +18,6 @@ urlpatterns = patterns('bicimap.views',
 
     # Uncomment the next line to enable the admin:
      (r'^admin/', include(admin.site.urls)),
-     (r'^', 'index'),
+     (r'^$', 'index'),
+		 (r'^kiosk_data$', 'kiosk_data'),
 )
