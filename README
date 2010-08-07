@@ -1,6 +1,12 @@
 This is a basic Django setup for Ubuntu and Apache 2.
 We are using python 2.5 and django 1.1
-database and the containing directory should be writable.
+
+Also South is useful for database migrations: $easy_install South
+The first time you do syncdb, comment out all the apps except for "south"
+The first time, initialize like this: $py manage.py schemamigration kiosks --initial
+Afterwards, use it like this: $py manage.py schemamigration kiosks --auto
+
+Note that the database and the containing directory should be writable.
 
 your vhosts.conf should have this to work properly:
 

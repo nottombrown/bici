@@ -1,2 +1,4 @@
 the crawler looks at http://www.sevici.es/service/carto and takes the important information from it.
 install element tree first using setup.py install
+
+Individual kiosk information for kiosk %s comes from: http://www.sevici.es/service/stationdetails/%s
