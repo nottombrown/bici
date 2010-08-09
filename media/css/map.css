@@ -11,6 +11,10 @@
 	moz-border-radius:15px;
 	border:solid 1px;
 }
+#search_button{
+	cursor:pointer;
+}
+
 #legend{
 	position:absolute;
 	top:-10px;

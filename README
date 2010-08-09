@@ -1,6 +1,7 @@
 This is a basic Django setup for Ubuntu and Apache 2.
 We are using python 2.5 and django 1.1
 
+$ apt-get install python-setuptools
 Also South is useful for database migrations: $easy_install South
 The first time you do syncdb, comment out all the apps except for "south"
 The first time, initialize like this: $py manage.py schemamigration kiosks --initial
