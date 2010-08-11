@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 # coding: utf-8
 """ Parses information from www.sevici.es. Available commands are ["help", "init", "update"]
 """
@@ -14,11 +14,13 @@ setup_environ(settings)
 # then import kiosk information
 from kiosks.models import Kiosk
 from django.db import IntegrityError
+from settings import ROOT_DIR
+
 
 # information is from http://www.sevici.es/service/carto
 def initialize_kiosks():
   # parse tree and add to database
-  tree = ElementTree.parse("crawler/stations")
+  tree = ElementTree.parse(ROOT_DIR+ "bicimap/crawler/stations")
   root = tree.getroot()
   
   for child in root.find("markers").findall("marker"):
@@ -44,7 +46,7 @@ def initialize_kiosks():
 
 # detail information from http://www.sevici.es/service/stationdetails/%s
 def update_kiosk_details(num):
-  output_file = "crawler/details"+str(num)
+  output_file = ROOT_DIR+"bicimap/crawler/details/detail"+str(num)
   os.system("wget http://www.sevici.es/service/stationdetails/" + str(num) + " -O "+ output_file)
   tree = ElementTree.parse(output_file)
   kiosk_elt = tree.getroot()
