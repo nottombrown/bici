@@ -1,4 +1,7 @@
+*.pyc
 bicimap/settings.py
+bicimap/crawler
+bicimap/kiosks/migrations
 *.pyc
 *~
 db/db
