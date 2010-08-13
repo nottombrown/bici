@@ -9,6 +9,10 @@ Afterwards, use it like this: $py manage.py schemamigration kiosks --auto
 
 Note that the database and the containing directory should be writable.
 
+Install ElementTree from bicimap/crawler/ 
+run $parsestation.py init
+Then set up a cron job to run $parsestation.py update every 10 minutes
+
 your vhosts.conf should have this to work properly:
 
 <VirtualHost 204.232.204.112>
