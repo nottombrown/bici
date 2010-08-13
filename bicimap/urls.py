@@ -20,4 +20,5 @@ urlpatterns = patterns('bicimap.views',
      (r'^admin/', include(admin.site.urls)),
      (r'^$', 'index'),
      (r'^kiosk_data$', 'kiosk_data'),
+     (r'^kiosk_history/(?P<kiosk_id>\d+)/$', 'kiosk_history'),
 )
