@@ -88,18 +88,27 @@ var GoogleMap = function (mediaURL) {
   this.makeGraph = function(kiosk) {
     // var maxBikes = kiosk.bikes+kiosk.spaces; //20 seems to be the global max, stick with that
     var maxBikes = 20;
-    $.getJSON(("/kiosk_history/"+kiosk.number), function (data) { //TODO: kiosk.number is somehow wrong
-      var records = data;
-      var csvData = "";
-      $.each(records, function (index,record){
-        var bikes=record.fields.bikes;
-        var bikePercent = bikes*100/maxBikes;
-        csvData += parseInt(bikePercent,10)+",";
-      });
-      csvData = csvData.slice(0,-1);
-        //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
-        var chartURL = "http://chart.apis.google.com/chart?chs="+graphWidth+"x"+graphHeight+"&chtt=Available+Bikes&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0000ff&chd=t:"+ csvData+ "&cht=lc&chxt=y,x&chxr=0,0,"+parseInt(maxBikes,10)+"&chxl=1:|00h00|04h00|08h00|12h00|16h00|24h00" ;
-          $("#graph").attr("src", chartURL); //form a closure around the kiosk
+    $.getJSON(("/today_recs/"+kiosk.number), function (rec_data) {
+        $.getJSON(("/today_predictions/"+kiosk.number), function (pred_data) {
+          var csvData = "";
+          var currentTimeOffset=rec_data.length;
+          $.each(rec_data, function (index,record){
+            var bikes=record.fields.bikes;
+            var bikePercent = bikes*100/maxBikes;
+            csvData += parseInt(bikePercent,10)+",";
+          });
+            $.each(pred_data, function (index,record){
+              var bikes=record.fields.bikes;
+              var bikePercent = bikes*100/maxBikes;
+              csvData += parseInt(bikePercent,10)+",";
+            });
+          csvData = csvData.slice(0,-1);
+            //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
+            var chartURL = "http://chart.apis.google.com/chart?chs="+graphWidth+"x"+graphHeight+"&chtt=Available+Bikes&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0000ff&chd=t:"+ csvData+ "&cht=lc&chxt=y,x&chxr=0,0,"+parseInt(maxBikes,10)+"&chxl=1:|00h00|04h00|08h00|12h00|16h00|24h00" +
+"&chm=V,FF0000,0,"+currentTimeOffset+",1.0";
+          //   "&chem=y;s=map_xpin_letter;d=pin_sright,A,FF0000;dp=2;ds=0;of=12,0" ;
+              $("#graph").attr("src", chartURL); //form a closure around the kiosk
+        });
     });
    
   };
