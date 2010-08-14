@@ -1,3 +1,10 @@
+body{
+    font-family: 'Myriad Pro', 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+.label{
+    font-weight:bold;
+    color:#0066CC;
+}
 #container{
 	position:fixed;
 	left:40px;
@@ -10,6 +17,7 @@
 	border-radius:15px;
 	moz-border-radius:15px;
 	border:solid 1px;
+	padding-top:20px;
 }
 #search_button{
 	cursor:pointer;
@@ -21,18 +29,22 @@
 	left:30px;
 	height:20px;
 	width:150px;
-	background-color: #57F;
+	background-color: #0066CC;
 	color:#FFF;
 	text-align:center;
 	border:solid 1px;
 	border-color:#000;
+	font-weight:bold;
 }
 #map_canvas{
 	height:100%
 }
 #search_form{
 	position:relative;
-	top:20px;
-	left:0px;
-	text-align:right;
+}
+#graph_container{
+    position:relative;
+    display:block;
+    width:260;
+    height:170;
 }
