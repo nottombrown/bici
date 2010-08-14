@@ -106,7 +106,7 @@ var GoogleMap = function (mediaURL) {
                 });
                 csvData = csvData.slice(0, - 1);
                 //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
-                var chartURL = "http://chart.apis.google.com/chart?chs=" + graphWidth + "x" + graphHeight + "&chtt=Available+Bikes&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0066CC&chd=t:" + csvData + "&cht=lc&chxt=y,x&chxr=0,0," + parseInt(maxBikes, 10) + "&chxl=1:|00h00|04h00|08h00|12h00|16h00|24h00" + "&chm=V,FF0000,0," + time + ",1.0" + "|B,DDDDDD,0," + time + ":,0";
+                var chartURL = "http://chart.apis.google.com/chart?chs=" + graphWidth + "x" + graphHeight + "&chtt=Available+Bikes&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0066CC&chd=t:" + csvData + "&cht=lc&chxt=y,x&chxr=0,0," + parseInt(maxBikes, 10) + "&chxl=1:|00h00|04h00|08h00|12h00|16h00|20h00|24h00" + "&chm=V,FF0000,0," + time + ",1.0" + "|B,DDDDDD,0," + time + ":,0";
 
                 $("#graph").one('load', function () { //Set something to run when it finishes loading
                     $("#throbber").hide();
