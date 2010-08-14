@@ -26,9 +26,9 @@ body{
 #legend{
 	position:absolute;
 	top:-10px;
-	left:30px;
+	left:20px;
 	height:20px;
-	width:150px;
+	width:120px;
 	background-color: #0066CC;
 	color:#FFF;
 	text-align:center;
@@ -47,4 +47,10 @@ body{
     display:block;
     width:260;
     height:170;
+}
+#footer{
+    position:absolute;
+    bottom:0px;
+    text-align:center;
+    width:inherit;
 }

@@ -93,16 +93,22 @@ var GoogleMap = function (mediaURL) {
         $.getJSON(("/today_recs/" + kiosk.number), function (rec_data) {
             $.getJSON(("/today_predictions/" + kiosk.number), function (pred_data) {
                 var csvData = "";
+
+                function parseToCSV(bikes) {
+                    var bikePercent = bikes * 100 / maxBikes;
+                    csvData = parseInt(bikePercent, 10) + ",";
+                    return csvData;
+                }
+
                 var time = rec_data.length;
                 $.each(rec_data, function (index, record) {
-                    var bikes = record.fields.bikes;
-                    var bikePercent = bikes * 100 / maxBikes;
-                    csvData += parseInt(bikePercent, 10) + ",";
+                    csvData += parseToCSV(record.fields.bikes);
+
                 });
+                //we update every 10 minutes, make sure that the current number matches up properly.
+                csvData += parseToCSV(kiosk.bikes, csvData) // TODO: make sure this is right
                 $.each(pred_data, function (index, record) {
-                    var bikes = record.fields.bikes;
-                    var bikePercent = bikes * 100 / maxBikes;
-                    csvData += parseInt(bikePercent, 10) + ",";
+                    csvData += parseToCSV(record.fields.bikes);
                 });
                 csvData = csvData.slice(0, - 1);
                 //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
