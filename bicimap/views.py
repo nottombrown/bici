@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from settings import MEDIA_URL
@@ -9,7 +11,33 @@ import datetime
 # Create your views here.
 def index(request):
     """Render the map"""
-    return render_to_response('map.html', {'MEDIA_URL': MEDIA_URL, "kiosk_data": kiosk_data})
+    return render_to_response('map.html', {
+        'MEDIA_URL': MEDIA_URL, 
+        "kiosk_data": kiosk_data,
+        "language_code":"es",
+        'SIVICI_MAP':"SIVICI MAPA",
+        "find_address":"Buscar dirección",
+        "search":"Buscar",
+        "showing":"Mostrando los",
+        "bicycles":"Bicis",
+        "spaces":"Aparcamientos",
+        "email":"correo",
+        })
+        
+def index_en(request):
+    """Render the map"""
+    return render_to_response('map.html', {
+        'MEDIA_URL': MEDIA_URL, 
+        "kiosk_data": kiosk_data,
+        "language_code":"en",
+        'SIVICI_MAP':"SIVICI MAP",
+        "find_address":"Find an address",
+        "search":"Go",
+        "showing":"I'm looking for",
+        "bicycles":"Bicycles",
+        "spaces":"Spaces",
+        "email":"email",
+        })
     
 def kiosk_data(request):
     """Give a snapshot of the current kiosk data"""

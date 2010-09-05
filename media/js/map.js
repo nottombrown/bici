@@ -1,12 +1,26 @@
 var google;
 var $;
-var GoogleMap = function (mediaURL) {
+var GoogleMap = function (mediaURL,language) {
+    var t_spaces, t_bikes,t_available;
+    if (language=="es"){
+           t_spaces = "Aparcamientos";
+           t_bikes = "Bicis";
+           t_available = "disponibles";
+       }   
+    if (language=="en"){
+              t_spaces = "Spaces";
+              t_bikes = "Bicycles";
+              t_available = "available";
+          }
     var that = this;
     var map;
     var geocoder;
     var lastWindow;
     var graphWidth = 260; //also defined in css
     var graphHeight = 170;
+    var bikeMarkers = [];
+    var spaceMarkers = [];
+    var addedSpaceMarkers = false;
     this.initialize = function () {
         //assume all other libraries have loaded
         this.geocoder = new google.maps.Geocoder();
@@ -17,16 +31,24 @@ var GoogleMap = function (mediaURL) {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        this.loadMarkers();
+        googleMap.loadMarkers(false);
     };
 
-    this.addMarker = function (kiosk) {
+    //if showSpaces is true we color based on spaces instead of vehicles
+    this.addMarker = function (kiosk,showSpaces) {
         var name = kiosk.name;
         var spaces = kiosk.spaces;
         var bikes = kiosk.bikes;
+        var slots;
         var latlng = new google.maps.LatLng(kiosk.lat, kiosk.lng);
+        if (showSpaces){
+            slots = spaces;
+        }
+        else{
+            slots = bikes;
+        }
         var image = new google.maps.MarkerImage(
-        mediaURL + "marker/marker_" + color(bikes) + ".png", new google.maps.Size(12, 20),
+        mediaURL + "marker/marker_" + color(slots) + ".png", new google.maps.Size(12, 20),
         // The origin for this image is 0,0.
         new google.maps.Point(0, 0),
         // The anchor for this image is the base of the pin at 0,32.
@@ -48,27 +70,35 @@ var GoogleMap = function (mediaURL) {
             icon: image,
             shadow: shadow
         });
+        
+        if (showSpaces){
+              spaceMarkers.push(marker);
+          }
+          else{
+              bikeMarkers.push(marker);
+         }
 
-        var contentString = "<div id='graph_container' " + "style='width:260px;height:170px'" + ">" + "</div><div class='label'>" + name.slice(4) + "</div>" + "<div class='marker_content'>" + "<br>bikes available: " + bikes + "<br>" + "spaces available: " + spaces + "</p>";
+        var contentString = "</div>"+"<div id='graph_container' " + "style='width:260px;height:170px'" + ">" + "</div>" + "<div class='marker_content'>" + "<div class='label' style='text-align:center'>" + name.slice(4) + "</div><div class='infowin_bikes'><span class='label'>"+t_bikes +":</span> " + bikes + "</div><div class='infowin_spaces'><span class='label'>" + t_spaces + ":</span> " + spaces + "</div>";
 
         var infoWindow = new google.maps.InfoWindow({
             content: contentString
         });
 
-        function color(bikes) {
-            if (bikes < 1) {
+        function color(slots) {
+            if (slots < 1) {
                 return "red";
             }
-            else if (bikes < 3) {
+            else if (slots < 3) {
                 return "orange";
             }
-            else if (bikes < 6) {
+            else if (slots < 6) {
                 return "yellow";
             }
             else {
                 return "green";
             }
         }
+
 
         google.maps.event.addListener(marker, 'click', function () {
             try {
@@ -77,42 +107,59 @@ var GoogleMap = function (mediaURL) {
                 //no window was open yet
             }
             infoWindow.open(map, marker);
-            that.makeGraph(kiosk);
+            that.makeGraph(kiosk,showSpaces);
             lastWindow = infoWindow;
         });
     };
 
-    this.makeGraph = function (kiosk) {
+    this.makeGraph = function (kiosk,showSpaces) {
+        // showSpaces = true;
         $("#graph_container").html("<img id='throbber' src='" + mediaURL + "throbber.gif'><img id='graph' width='" + graphWidth + "' height='" + graphHeight + "'>");
         $("#graph").hide();
         $("#throbber").imgCenter({
             scaleToFit: false
         });
         // var maxBikes = kiosk.bikes+kiosk.spaces; //20 seems to be the global max, stick with that
-        var maxBikes = 20;
+        var maxSlots = 20;
         $.getJSON(("/today_recs/" + kiosk.number), function (rec_data) {
             $.getJSON(("/today_predictions/" + kiosk.number), function (pred_data) {
                 var csvData = "";
 
-                function parseToCSV(bikes) {
-                    var bikePercent = bikes * 100 / maxBikes;
-                    csvData = parseInt(bikePercent, 10) + ",";
+                function parseToCSV(slots) {
+                    var slotPercent = slots * 100 / maxSlots;
+                    csvData = parseInt(slotPercent, 10) + ",";
                     return csvData;
                 }
-
+                var t_slots;
+            if(showSpaces){
+                t_slots = t_spaces;
+            }
+            else{
+                t_slots = t_bikes;
+            }
                 var time = rec_data.length;
                 $.each(rec_data, function (index, record) {
+                    if(showSpaces){
+                          csvData += parseToCSV(record.fields.spaces);
+                    }
+                    else{
                     csvData += parseToCSV(record.fields.bikes);
+                }
 
                 });
                 //we update every 10 minutes, make sure that the current number matches up properly.
-                csvData += parseToCSV(kiosk.bikes, csvData) // TODO: make sure this is right
+                csvData += parseToCSV(kiosk.bikes, csvData); // TODO: make sure this is right
                 $.each(pred_data, function (index, record) {
+                    if(showSpaces){
+                          csvData += parseToCSV(record.fields.spaces);
+                    }else{
                     csvData += parseToCSV(record.fields.bikes);
+                }
+                   
                 });
                 csvData = csvData.slice(0, - 1);
                 //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
-                var chartURL = "http://chart.apis.google.com/chart?chs=" + graphWidth + "x" + graphHeight + "&chtt=Available+Bikes&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0066CC&chd=t:" + csvData + "&cht=lc&chxt=y,x&chxr=0,0," + parseInt(maxBikes, 10) + "&chxl=1:|00h00|04h00|08h00|12h00|16h00|20h00|24h00" + "&chm=V,FF0000,0," + time + ",1.0" + "|B,DDDDDD,0," + time + ":,0";
+                var chartURL = "http://chart.apis.google.com/chart?chs=" + graphWidth + "x" + graphHeight + "&chtt=+"+t_slots+" "+t_available+"&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0066CC&chd=t:" + csvData + "&cht=lc&chxt=y,x&chxr=0,0," + parseInt(maxSlots, 10) + "&chxl=1:|00h00|04h00|08h00|12h00|16h00|20h00|24h00" + "&chm=V,FF0000,0," + time + ",1.0" + "|B,DDDDDD,0," + time + ":,0";
 
                 $("#graph").one('load', function () { //Set something to run when it finishes loading
                     $("#throbber").hide();
@@ -129,17 +176,49 @@ var GoogleMap = function (mediaURL) {
 
     };
 
-    this.loadMarkers = function () {
+    this.loadMarkers = function (showSpaces) {
         $.getJSON("/kiosk_data", function (data) {
             that.kiosks = data;
             $.each(that.kiosks, function (index, value) {
                 var kiosk = value.fields;
                 kiosk.number = value.pk; //for some reason number is stored as pk
-                that.addMarker(kiosk);
+                that.addMarker(kiosk,showSpaces);
             });
         });
     };
 
+    this.showBikes = function(){
+        try {
+            lastWindow.close();
+        } catch (err) {
+            //no window was open yet
+        }
+        $.each(spaceMarkers,function(index, marker){
+                marker.setVisible(false);
+            });
+        $.each(bikeMarkers,function(index, marker){
+            marker.setVisible(true);
+        });
+
+    };
+    
+    this.showSpaces = function(){
+        try {
+            lastWindow.close();
+        } catch (err) {
+            //no window was open yet
+        }
+        $.each(bikeMarkers,function(index, marker){
+            marker.setVisible(false);
+        });
+        if (!addedSpaceMarkers){
+           googleMap.loadMarkers(true);
+           addedSpaceMarkers = true;
+        }
+        $.each(spaceMarkers,function(index, marker){
+                marker.setVisible(true);
+            });
+    };
 
     this.codeAddress = function () {
         var address = document.getElementById("address").value;

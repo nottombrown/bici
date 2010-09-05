@@ -12,7 +12,7 @@ body{
 	opacity:0.9;
 	background-color: #FFF;
 	width:200px;
-	height:150px;
+	height:120px;
 	padding:10px;
 	border-radius:15px;
 	moz-border-radius:15px;
@@ -24,10 +24,11 @@ body{
 }
 
 #legend{
+    padding:0px;
+    height:19px;
 	position:absolute;
 	top:-10px;
-	left:20px;
-	height:20px;
+	left:15px;
 	width:120px;
 	background-color: #0066CC;
 	color:#FFF;
@@ -35,6 +36,11 @@ body{
 	border:solid 1px;
 	border-color:#000;
 	font-weight:bold;
+}
+#legend_title{
+    position:absolute;
+    top:1px;
+    width:inherit;
 }
 #map_canvas{
 	height:100%
@@ -53,4 +59,22 @@ body{
     bottom:0px;
     text-align:center;
     width:inherit;
+}
+.ui-button{
+    font-size:10px;
+}
+#search_area{
+    position:relative;
+    margin-top:5px;
+}    
+#display_type_area{
+        position:relative;
+        margin-top:10px;
+}
+#languages{
+    position:absolute;
+    display:inline-block;
+    width:100px;
+    left:114px;
+    top:12px;
 }
