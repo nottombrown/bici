@@ -1,5 +1,3 @@
-var google;
-var $;
 var GoogleMap = function (mediaURL,language) {
     var t_spaces, t_bikes,t_available;
     if (language=="es"){
