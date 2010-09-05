@@ -3,7 +3,7 @@
 <head> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/> 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-<title>{{SIVICI_MAP}}</title> 
+<title>{{SEVICI_MAP}}</title> 
 <link href="http://code.google.com/apis/maps/documentation/javascript/examples/standard.css" rel="stylesheet" type="text/css" /> 
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <link href="{{MEDIA_URL}}css/map.css" rel="stylesheet" type="text/css"/>
@@ -42,10 +42,7 @@ $(document).ready(function () {
 <div id="map_canvas"></div> 
 <div id="container"> 
   <div id="legend">
-    <span id="legend_title">{{SIVICI_MAP}}</span>
-    <div id="languages">
-        <a href="/"><img src="{{MEDIA_URL}}spain-white.png"></a> <a href="/en"><img src="{{MEDIA_URL}}uk-white.png"></a>
-    </div>
+    <span id="legend_title">{{SEVICI_MAP}}</span>
   </div>
   <div id="search_area">
       <span class="label">{{find_address}}:</span>
@@ -62,6 +59,9 @@ $(document).ready(function () {
       </div>
   </div>
   <div id="footer">
+    <div id="languages">
+            <a href="/"><img style="border:none" src="{{MEDIA_URL}}es.png"></a> <a href="/en"><img style="border:none" src="{{MEDIA_URL}}us.png"></a>
+     </div>
   {{email}}: <a href="mailto:nottombrown@gmail.com">tombrown</a>
   </div>
 
