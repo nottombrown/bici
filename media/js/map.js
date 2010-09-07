@@ -146,7 +146,14 @@ var GoogleMap = function (mediaURL,language) {
 
                 });
                 //we update every 10 minutes, make sure that the current number matches up properly.
+                    if(showSpaces){
+                csvData += parseToCSV(kiosk.spaces, csvData); // TODO: make sure this is right
+                    }
+                    else{
                 csvData += parseToCSV(kiosk.bikes, csvData); // TODO: make sure this is right
+                    }
+
+                
                 $.each(pred_data, function (index, record) {
                     if(showSpaces){
                           csvData += parseToCSV(record.fields.spaces);
