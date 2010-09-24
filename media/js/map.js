@@ -30,6 +30,13 @@ var GoogleMap = function (mediaURL,language) {
         };
         map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         googleMap.loadMarkers(false);
+        google.maps.event.addListener(map, 'click', function() {
+            try {
+                lastWindow.close();
+            } catch (err) {
+                //no window was open yet
+            }
+        });
     };
 
     //if showSpaces is true we color based on spaces instead of vehicles
@@ -224,12 +231,16 @@ var GoogleMap = function (mediaURL,language) {
                 marker.setVisible(true);
             });
     };
-
     this.codeAddress = function () {
-        var address = document.getElementById("address").value;
-        this.geocoder.geocode({
-            'address': address
-        }, function (results, status) {
+        //limit with southwest and northeast bounds
+        var sw = new google.maps.LatLng(37.312837,-6.102905);
+                var ne = new google.maps.LatLng(37.463959,-5.913391);
+                var bounds = new google.maps.LatLngBounds(sw,ne);
+        var request = {
+        'address' : document.getElementById("address").value,
+        'bounds' : bounds
+        };
+        this.geocoder.geocode(request, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
                 var marker = new google.maps.Marker({
