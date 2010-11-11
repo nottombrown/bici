@@ -38,7 +38,10 @@ def initialize_kiosks():
                             address=address,
                             full_address=full_address,
                             lat=lat,lng=lng,
-                            last_updated=datetime.datetime.now())
+                            last_updated=datetime.datetime.now(),
+                        spaces=0,
+                        bikes=0,)
+
             kio.save()
             print "Added kiosk number: %d" % int(number)
         except IntegrityError, msg:
@@ -54,7 +57,7 @@ def update_kiosk_details(num):
     bikes = int(avail_elt.text)
     spaces = int(kiosk_elt.find("free").text)
     # total = int(kiosk_elt.find("total").text)
-    
+    print "success"
     kiosk = Kiosk.objects.get(number=num)
     kiosk.update_status(bikes=bikes,spaces=spaces)
     kiosk.save()
