@@ -1,108 +1,136 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/> 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-<title>{{SEVICI_MAP}}</title> 
-<link href="http://code.google.com/apis/maps/documentation/javascript/examples/standard.css" rel="stylesheet" type="text/css" /> 
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<link href="{{MEDIA_URL}}css/map.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script> 
-<script type='text/javascript' src='{{MEDIA_URL}}js/jquery.imgCenter.js'></script> 
-<script type="text/javascript" src="{{MEDIA_URL}}js/map.js"></script> 
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+    <title>{{SEVICI_MAP}}</title> 
+    <link href="http://code.google.com/apis/maps/documentation/javascript/examples/standard.css" rel="stylesheet" type="text/css" /> 
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link href="{{MEDIA_URL}}css/map.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script> 
+    <script type='text/javascript' src='{{MEDIA_URL}}js/jquery.imgCenter.js'></script> 
+    <script type="text/javascript" src="{{MEDIA_URL}}js/map.js"></script> 
 
-<script type="text/javascript">
-$(document).ready(function () {
-  googleMap = new GoogleMap("{{MEDIA_URL}}","{{language_code}}");
-  $("#search_button").button().click(function () {
-    googleMap.codeAddress();
-  });
-  $("#search_form").submit(function () {
-    googleMap.codeAddress();
-    return false; //do not actually submit the form (stay on same page)
-  });
-  $("#radio1").click(function(){
-      googleMap.showBikes();
-  })   ;
-  $("#radio2").click(function(){
-          googleMap.showSpaces();
-      });
-  $("#radio_set").buttonset();
+    <script type="text/javascript">
+    $(document).ready(function () {
+        googleMap = new GoogleMap("{{MEDIA_URL}}","{{language_code}}");
+        $("#search_button").button().click(function () {
+            googleMap.codeAddress();
+        });
+        $("#search_form").submit(function () {
+            googleMap.codeAddress();
+            return false; //do not actually submit the form (stay on same page)
+        });
+        $("#radio1").click(function(){
+            googleMap.showBikes();
+        })   ;
+        $("#radio2").click(function(){
+            googleMap.showSpaces();
+        });
+        $("#radio_set").buttonset();
 
-  googleMap.initialize();
- // googleMap.showBikes();
+        googleMap.initialize();
+        // googleMap.showBikes();
 
-});
+    });
 
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-19003408-1']);
-  _gaq.push(['_trackPageview']);
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19003408-1']);
+    _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
 
-</script>
+        </script>
 
-</head> 
-<body>
-<div id="map_canvas"></div> 
-<div id="container"> 
-  <div id="legend">
-    <span id="legend_title">{{SEVICI_MAP}}</span>
-  </div>
-  <div id="search_area">
-      <span class="label">{{find_address}}:</span>
-      <form id="search_form">
-       <input id="address" type="textbox" value="Avenida de Cadiz"> 
-       <input id="search_button" type="submit" value="{{search}}">
-      </form>
-  </div>
-  <div id="display_type_area">
-        <span class="label">{{showing}}:</span>
-      <div id="radio_set">
-      	<input type="radio" id="radio1" name="radio" checked="checked" /><label for="radio1">{{bicycles}}</label>
-      	<input type="radio" id="radio2" name="radio"  /><label for="radio2">{{spaces}}</label>
-      </div>
-  </div>
-  <div id="footer">
-    <div id="languages">
-            <a href="/">español <img style="border:none" src="{{MEDIA_URL}}es.png"></a> <a href="/en"><img style="border:none" src="{{MEDIA_URL}}us.png"> english</a>
-     </div>
-    <div>
-  {{email}}: <a href="mailto:nottombrown@gmail.com">tombrown</a>
-  </div>
-    </div>
+    </head> 
+    <body>
+        <div id="map_canvas"></div> 
+        <div id="container"> 
+            <div id="legend">
+                <span id="legend_title">{{SEVICI_MAP}}</span>
+            </div>
+            <div id="search_area">
+                <span class="label">{{find_address}}:</span>
+                <form id="search_form">
+                    <input id="address" type="textbox" value="Avenida de Cadiz"> 
+                    <input id="search_button" type="submit" value="{{search}}">
+                </form>
+            </div>
+            <div id="display_type_area">
+                <span class="label">{{showing}}:</span>
+                <div id="radio_set">
+                    <input type="radio" id="radio1" name="radio" checked="checked" /><label for="radio1">{{bicycles}}</label>
+                    <input type="radio" id="radio2" name="radio"  /><label for="radio2">{{spaces}}</label>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="languages">
+                    <a href="/">español <img style="border:none" src="{{MEDIA_URL}}es.png"></a> <a href="/en"><img style="border:none" src="{{MEDIA_URL}}us.png"> english</a>
+                </div>
+                <div>
+                    {{email}}: <a href="mailto:nottombrown@gmail.com">tombrown</a>
+                </div>
+            </div>
 
-</div>
+        </div>
+
+        <div id="marker">
+            <div id='graph_container' style='width:260px;height:170px'>
+
+            </div>
+            <div class='marker_content'>
+                <div class='label' style='text-align:center'>
+                    <span id="name"></span>
+                </div>
+                <table>
+                    <tr>
+                        <td class='label'>
+                            {{bicycles}}
+                        </td>
+                        <td id="bikes"> 
+                        </td>
+                  
+                        <td class='label' style="padding-left:50px">
+                            {{spaces}}
+                        </td>
+                        <td id="spaces">
+                        </td>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
 <!--
 <script type="text/javascript">
-  var uservoiceOptions = {
-    key: 'sevicimapa',
-    host: 'sevicimapa.uservoice.com', 
-    forum: '70579',
-    alignment: 'right',
-    background_color:'#0066CC', 
-    text_color: 'white',
-    hover_color: '#FF0000',
-    lang: '{{language_code}}',
-    showTab: true
-  };
-  function _loadUserVoice() {
-    var s = document.createElement('script');
-    s.src = ("https:" == document.location.protocol ? "https://" : "http://") + "uservoice.com/javascripts/widgets/tab.js";
-    document.getElementsByTagName('head')[0].appendChild(s);
-  }
-  _loadSuper = window.onload;
-  window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+var uservoiceOptions = {
+key: 'sevicimapa',
+host: 'sevicimapa.uservoice.com', 
+forum: '70579',
+alignment: 'right',
+background_color:'#0066CC', 
+text_color: 'white',
+hover_color: '#FF0000',
+lang: '{{language_code}}',
+showTab: true
+};
+function _loadUserVoice() {
+var s = document.createElement('script');
+s.src = ("https:" == document.location.protocol ? "https://" : "http://") + "uservoice.com/javascripts/widgets/tab.js";
+document.getElementsByTagName('head')[0].appendChild(s);
+}
+_loadSuper = window.onload;
+window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
 </script>
 -->
 </body> 

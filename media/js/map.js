@@ -73,7 +73,7 @@ var GoogleMap = function (mediaURL,language) {
             map: map,
             title: name,
             icon: image,
-            shadow: shadow
+            shadow: shadow,
         });
         
         if (showSpaces){
@@ -83,10 +83,12 @@ var GoogleMap = function (mediaURL,language) {
               bikeMarkers.push(marker);
          }
 
-        var contentString = "</div>"+"<div id='graph_container' " + "style='width:260px;height:170px'" + ">" + "</div>" + "<div class='marker_content'>" + "<div class='label' style='text-align:center'>" + name.slice(4) + "</div><div class='infowin_bikes'><span class='label'>"+t_bikes +":</span> " + bikes + "</div><div class='infowin_spaces'><span class='label'>" + t_spaces + ":</span> " + spaces + "</div>";
-
+        var contentElt = document.getElementById("marker")
+        
+        
+        
         var infoWindow = new google.maps.InfoWindow({
-            content: contentString
+            content: contentElt
         });
 
         function color(slots) {
@@ -127,6 +129,12 @@ var GoogleMap = function (mediaURL,language) {
         });
         // var maxBikes = kiosk.bikes+kiosk.spaces; //20 seems to be the global max, stick with that
         var maxSlots = 20;
+        
+        //update text values in marker
+        $("#name").text(kiosk.name.slice(4));
+        $("#bikes").text(kiosk.bikes);
+        $("#spaces").text(kiosk.spaces);
+        
         $.getJSON(("/today_recs/" + kiosk.number), function (rec_data) {
           $.getJSON(("/today_predictions/" + kiosk.number), function (pred_data) {
 		  var csvData = "";
@@ -169,11 +177,13 @@ var GoogleMap = function (mediaURL,language) {
                 }
                    
                 });
+                
                 csvData = csvData.slice(0, - 1);
                 //copy to http://code.google.com/apis/chart/docs/chart_playground.html to edit
                 var chartURL = "http://chart.apis.google.com/chart?chs=" + graphWidth + "x" + graphHeight + "&chtt=+"+t_slots+" "+t_available+"&chts=000000,18&chf=c,lg,90,ffffff,1,ffffff,0&chls=2,1,0&chco=0066CC&chd=t:" + csvData + "&cht=lc&chxt=y,x&chxr=0,0," + parseInt(maxSlots, 10) + "&chxl=1:|00h00|04h00|08h00|12h00|16h00|20h00|24h00" + "&chm=V,FF0000,0," + time + ",1.0" + "|B,DDDDDD,0," + time + ":,0";
 
-                $("#graph").one('load', function () { //Set something to run when it finishes loading
+                $("#graph").one('load', function () { 
+                  //Set something to run when it finishes loading
                     $("#throbber").hide();
                     $(this).fadeIn(); //Fade it in when loaded
                 }).attr('src', chartURL) //Set the source so it begins fetching
@@ -187,7 +197,6 @@ var GoogleMap = function (mediaURL,language) {
         });
 
 	}
-	sleep(200);
 	
 	callbackHack();
 	
