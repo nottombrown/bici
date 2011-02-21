@@ -7,6 +7,7 @@ body{
 }
 #container{
 	position:fixed;
+	width:200px;
 	left:45px;
 	bottom:30px;
 	opacity:0.9;
@@ -60,6 +61,9 @@ body{
     position:relative;
     margin-top:5px;
 }    
+#address{
+  width:154px;
+}
 #display_type_area{
         position:relative;
         margin-top:10px;
@@ -67,4 +71,17 @@ body{
 #languages{
     position:relative;
     display:inline-block;
+}
+
+.ui-autocomplete {
+	max-height: 130px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	/* add padding to account for vertical scrollbar */
+	padding-right: 20px;
+}
+
+.ui-menu-item{
+  font-size:10px !important;
 }
