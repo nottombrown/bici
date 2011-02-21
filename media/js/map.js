@@ -120,6 +120,7 @@ var GoogleMap = function (mediaURL,language) {
     this.makeGraph = function (kiosk,showSpaces) {
         // showSpaces = true;
         $("#graph_container").html("<img id='throbber' src='" + mediaURL + "throbber.gif'><img id='graph' width='" + graphWidth + "' height='" + graphHeight + "'>");
+	function callbackHack(){
         $("#graph").hide();
         $("#throbber").imgCenter({
             scaleToFit: false
@@ -127,9 +128,8 @@ var GoogleMap = function (mediaURL,language) {
         // var maxBikes = kiosk.bikes+kiosk.spaces; //20 seems to be the global max, stick with that
         var maxSlots = 20;
         $.getJSON(("/today_recs/" + kiosk.number), function (rec_data) {
-            $.getJSON(("/today_predictions/" + kiosk.number), function (pred_data) {
-                var csvData = "";
-
+          $.getJSON(("/today_predictions/" + kiosk.number), function (pred_data) {
+		  var csvData = "";
                 function parseToCSV(slots) {
                     var slotPercent = slots * 100 / maxSlots;
                     csvData = parseInt(slotPercent, 10) + ",";
@@ -186,6 +186,11 @@ var GoogleMap = function (mediaURL,language) {
             });
         });
 
+	}
+	sleep(200);
+	
+	callbackHack();
+	
     };
 
     this.loadMarkers = function (showSpaces) {
